@@ -3,8 +3,11 @@
 configure :amixer do |s| # {{{
   s.interval = s.config[:interval]      || 5
   s.device   = s.config[:device]        || "pulse"
-  s.prefix   = s.config[:prefix]        || " Vol: "
-  s.suffix   = s.config[:suffix]        || " >"
+  s.prefix   = s.config[:prefix]        || ""
+  s.suffix   = s.config[:suffix]        || ""
+  s.show_icon= s.config[:show_icon]     || true
+  s.sound    = Subtlext::Icon.new("sound.xbm")
+  s.mute     = Subtlext::Icon.new("mute.xbm")
 end # }}}
 
 helper do
@@ -27,14 +30,23 @@ helper do
   def set_volume(vol)
     if vol
       vstr = "%3i%" % vol.to_s
+      ic = self.sound
     else
       vstr = "mute"
+      ic = self.mute
     end
 
-    self.data = self.prefix + vstr + self.suffix
+    if self.show_icon == true
+      self.data = ic + self.prefix + vstr + self.suffix
+    else
+      self.data = self.prefix + vstr + self.suffix
+    end
   end
 
   def get_volume(devInfo)
+    if not devInfo
+      return
+    end
     vol = devInfo.match(/\[([0-9]+)%\] \[(on|off)\]/)
     volume = vol.captures[0].to_i
     if vol.captures[1] == "on"

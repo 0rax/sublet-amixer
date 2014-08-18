@@ -32,19 +32,25 @@ NOTES
 	:name        => "prefix",
 	:type        => "string",
 	:description => "Prefix",
-	:def_value   => " Vol: "
+	:def_value   => ""
     },
     {
 	:name        => "suffix",
 	:type        => "string",
 	:description => "Suffix",
-	:def_value   => " >"
+	:def_value   => ""
+    },
+    {
+	:name        => "show_icon",
+	:type        => "bool",
+	:description => "Show icon",
+	:def_value   => true
     }
   ]
-  s.version     = "0.1"
+  s.version     = "0.2"
   s.tags        = [ "Amixer", "Volume", "Linux", "Config", "Grabs", "AlsaMixer", "MouseWheel" ]
   s.files       = [ "amixer.rb" ]
-
+  s.icons    = [ "sound.xbm", "mute.xbm" ]
   s.grabs = {
       :AudioRaise  => "Increase volume",
       :AudioLower  => "Decrease volume",
